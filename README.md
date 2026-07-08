@@ -558,9 +558,6 @@ spring.datasource.username=user
 spring.datasource.password=pass
 spring.jpa.hibernate.ddl-auto=validate
 ```
-
----
-
 ## 📈 Trade-offs & Limitations
 
 | Aspect | Current | Production Consideration |
@@ -575,76 +572,6 @@ spring.jpa.hibernate.ddl-auto=validate
 | **URL validation** | Basic | Full RFC 3986 compliance |
 | **Custom aliases** | All allowed | Whitelist validation |
 
----
-
-## 📚 Modern Java Features Explained
-
-### Records
-
-**Before (Java 16):**
-```java
-class Point {
-    private final int x;
-    private final int y;
-    
-    Point(int x, int y) { this.x = x; this.y = y; }
-    int x() { return x; }
-    int y() { return y; }
-    @Override equals() { ... }
-    @Override hashCode() { ... }
-    @Override toString() { ... }
-}
-```
-
-**After (Java 16+):**
-```java
-record Point(int x, int y) {}  // Same functionality, 1 line!
-```
-
-### Sealed Classes
-
-**Before (Java 15):**
-```java
-interface Shape {
-    // Could be implemented by any class
-}
-class Circle implements Shape { }
-class Square implements Shape { }
-class Unknown implements Shape { }  // Oops!
-```
-
-**After (Java 17+):**
-```java
-sealed interface Shape permits Circle, Square {
-    // Only Circle and Square allowed!
-}
-class Circle implements Shape { }
-class Square implements Shape { }
-```
-
-### Pattern Matching
-
-**Before (Java 16):**
-```java
-if (obj instanceof String) {
-    String str = (String) obj;
-    System.out.println(str.length());
-}
-```
-
-**After (Java 21+):**
-```java
-if (obj instanceof String str) {
-    System.out.println(str.length());  // No explicit cast!
-}
-
-// Record pattern matching
-if (response instanceof ShortenUrlResponse(String code, String url, _, _, _, long clicks)) {
-    System.out.println(code + " has " + clicks + " clicks");
-}
-```
-
----
 
 ## ✨ Key Achievements
 
@@ -665,7 +592,3 @@ if (response instanceof ShortenUrlResponse(String code, String url, _, _, _, lon
 - **Issues/Questions**: Check application logs (`logging.level.com.urlshortener=DEBUG`)
 - **Metrics**: Visit `http://localhost:8080/actuator/metrics`
 - **Health**: Visit `http://localhost:8080/actuator/health`
-
----
-
-**Built with ❤️ using Spring Boot 3.3, Java 21, and modern software engineering practices.**
